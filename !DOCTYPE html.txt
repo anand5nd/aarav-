@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackbuck GPS & FASTag Solutions | GPS Tracking Tamil Nadu | FASTag Services</title>
+<meta name="description" content="Blackbuck GPS & FASTag Solutions - Tamil Nadu's leading GPS Tracking & FASTag company. Serving Karaikudi, Devakottai, Pudukottai, Thiruppathur, Aranthangi, Manamelkudi, Singampunari and all over Tamil Nadu. 24/7 support.">
+<meta name="keywords" content="GPS Tracking Tamil Nadu, GPS Tracker Karaikudi, FASTag Services Karaikudi, GPS Tracking Devakottai, GPS Pudukottai, FASTag Thiruppathur, GPS Aranthangi, GPS Manamelkudi, GPS Singampunari, AIS 140 GPS, Vehicle Tracking System, Fleet Management Tamil Nadu, Fuel Monitoring System">
+<meta property="og:title" content="Blackbuck GPS & FASTag Solutions">
+<meta property="og:description" content="Tamil Nadu's #1 GPS Tracking & FASTag Service Provider">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A1628;
+    --navy-mid: #1E3A5F;
+    --navy-light: #2A4D7F;
+    --orange: #FF6B1A;
+    --orange-light: #FF8C4A;
+    --orange-glow: rgba(255,107,26,0.3);
+    --gold: #FFB347;
+    --white: #FFFFFF;
+    --gray-100: #F0F4F8;
+    --gray-200: #D0DCE8;
+    --gray-500: #7A90A8;
+    --text-dark: #0A1628;
+    --text-muted: #5A7090;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+  .tamil { font-family: 'Noto Sans Tamil', sans-serif; }
+  .rajdhani { font-family: 'Rajdhani', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,107,26,0.2);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--orange), var(--gold));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .nav-logo-text { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--white); line-height: 1.1; }
+  .nav-logo-sub { font-size: 0.65rem; color: var(--orange); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: var(--gray-200); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    color: white; border: none; padding: 9px 20px;
+    border-radius: 6px; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--orange-glow); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center; overflow: hidden;
+    padding-top: 68px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: #070f1c;
+  }
+  /* Full-bleed canvas tracking animation */
+  #trackingCanvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+  }
+  /* Dark gradient overlay so text stays readable */
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background:
+      linear-gradient(90deg, rgba(7,15,28,0.88) 0%, rgba(7,15,28,0.65) 55%, rgba(7,15,28,0.25) 100%),
+      linear-gradient(180deg, rgba(7,15,28,0.3) 0%, transparent 40%, rgba(7,15,28,0.5) 100%);
+  }
+  /* Satellite grid map */
+  .map-grid {
+    position: absolute; inset: 0; z-index: 1; opacity: 0.07;
+    background-image:
+      linear-gradient(rgba(255,107,26,0.8) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,107,26,0.8) 1px, transparent 1px);
+    background-size: 55px 55px;
+  }
+  /* Legacy SVG panel — hidden now */
+  .hero-map-canvas { display: none; }
+  .hero-content {
+    position: relative; z-index: 10;
+    padding: 80px 5%;
+    max-width: 640px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,107,26,0.15);
+    border: 1px solid rgba(255,107,26,0.4);
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 0.78rem; font-weight: 600; color: var(--orange);
+    letter-spacing: 0.5px; margin-bottom: 24px;
+    animation: fadeInDown 0.6s ease both;
+  }
+  .hero-badge::before { content: '●'; animation: pulse-dot 1.5s infinite; color: #4AFF9F; }
+  @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero-h1 {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.25;
+    color: var(--white);
+    animation: fadeInUp 0.7s 0.1s ease both;
+  }
+  .hero-h1 span { color: var(--orange); }
+  .hero-sub {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--gray-200); line-height: 1.8;
+    margin-top: 18px;
+    animation: fadeInUp 0.7s 0.2s ease both;
+  }
+  .hero-btns {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    margin-top: 34px;
+    animation: fadeInUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    color: white; padding: 14px 26px;
+    border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+    text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    border: none; cursor: pointer;
+    font-family: 'Noto Sans Tamil', sans-serif;
+    box-shadow: 0 4px 20px var(--orange-glow);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,26,0.5); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: white; padding: 13px 26px;
+    border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; transition: all 0.2s;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    cursor: pointer;
+    font-family: 'Noto Sans Tamil', sans-serif;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--orange); color: var(--orange); }
+  .hero-trust {
+    display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap;
+    animation: fadeInUp 0.7s 0.4s ease both;
+  }
+  .trust-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; color: var(--gray-200);
+  }
+  .trust-pill .icon { color: var(--orange); font-size: 1rem; }
+
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeInDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+
+  /* Route animation */
+  .route-path { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: drawRoute 3s 0.5s ease forwards; }
+  .route-path2 { stroke-dasharray: 800; stroke-dashoffset: 800; animation: drawRoute 2.5s 1.2s ease forwards; }
+  .route-path3 { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawRoute 2s 2s ease forwards; }
+  @keyframes drawRoute { to { stroke-dashoffset: 0; } }
+  .pin-pulse { animation: pinAppear 0.4s ease both; }
+  @keyframes pinAppear { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+  .vehicle-dot { animation: moveDot 4s 3.5s linear infinite; }
+  @keyframes moveDot {
+    0%{offset-distance:0%} 100%{offset-distance:100%}
+  }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 90px 5%; }
+  .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 3px;
+    color: var(--orange); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    font-weight: 700; line-height: 1.3; color: var(--white);
+  }
+  .section-title span { color: var(--orange); }
+  .section-desc {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 1rem; color: var(--gray-500); line-height: 1.8;
+    max-width: 600px; margin-top: 12px;
+  }
+  .section-header { margin-bottom: 56px; }
+
+  /* ── SERVICES ── */
+  #services { background: #0D1E35; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .service-card {
+    background: linear-gradient(145deg, #122040, #0F1A2E);
+    border: 1px solid rgba(255,107,26,0.15);
+    border-radius: 16px; padding: 32px;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { transform: translateY(-6px); border-color: rgba(255,107,26,0.4); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    width: 60px; height: 60px;
+    background: rgba(255,107,26,0.12);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; margin-bottom: 22px;
+    border: 1px solid rgba(255,107,26,0.2);
+  }
+  .service-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.25rem; font-weight: 700; color: var(--white);
+    margin-bottom: 8px; letter-spacing: 0.3px;
+  }
+  .service-card h3 span { color: var(--orange); }
+  .service-card .service-sub {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.82rem; color: var(--orange); margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .service-list { list-style: none; }
+  .service-list li {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.87rem; color: var(--gray-200);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .service-list li::before { content: '▸'; color: var(--orange); font-size: 0.7rem; flex-shrink: 0; }
+  .service-list li:last-child { border-bottom: none; }
+
+  /* ── STATS ── */
+  #stats {
+    background: linear-gradient(135deg, #0F1E35 0%, #1a2f4a 50%, #0F1E35 100%);
+    position: relative; overflow: hidden;
+  }
+  #stats::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255,107,26,0.07) 0%, transparent 70%);
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px; position: relative;
+  }
+  .stat-card { text-align: center; padding: 32px 20px; }
+  .stat-number {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--orange), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.9rem; color: var(--gray-200); margin-top: 8px;
+  }
+  .stat-divider { width: 40px; height: 2px; background: var(--orange); margin: 12px auto 0; border-radius: 1px; }
+
+  /* ── WHY CHOOSE ── */
+  #why { background: var(--navy); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .why-visual {
+    position: relative;
+    background: linear-gradient(145deg, #122040, #0F1A2E);
+    border-radius: 20px; padding: 40px;
+    border: 1px solid rgba(255,107,26,0.2);
+    overflow: hidden;
+  }
+  .why-visual-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .why-mini-card {
+    background: rgba(255,107,26,0.07);
+    border: 1px solid rgba(255,107,26,0.2);
+    border-radius: 12px; padding: 16px;
+    text-align: center;
+  }
+  .why-mini-card .icon { font-size: 1.8rem; margin-bottom: 8px; display: block; }
+  .why-mini-card p { font-family: 'Noto Sans Tamil', sans-serif; font-size: 0.78rem; color: var(--gray-200); }
+  .why-points { display: flex; flex-direction: column; gap: 16px; }
+  .why-point {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px; border-radius: 10px;
+    transition: background 0.2s;
+  }
+  .why-point:hover { background: rgba(255,107,26,0.06); }
+  .why-check {
+    width: 28px; height: 28px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--orange), var(--gold));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; color: white;
+  }
+  .why-text h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 2px;
+  }
+  .why-text p { font-family: 'Noto Sans Tamil', sans-serif; font-size: 0.82rem; color: var(--gray-500); }
+
+  /* ── REVIEWS ── */
+  #reviews { background: #0D1E35; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .review-card {
+    background: linear-gradient(145deg, #122040, #0F1A2E);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 28px;
+    position: relative; transition: transform 0.3s, border-color 0.3s;
+  }
+  .review-card:hover { transform: translateY(-4px); border-color: rgba(255,107,26,0.3); }
+  .review-stars { color: var(--gold); font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 16px; }
+  .review-text {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.9rem; color: var(--gray-200); line-height: 1.75;
+    font-style: italic;
+  }
+  .review-text::before { content: '"'; color: var(--orange); font-size: 1.5rem; line-height: 0.5; vertical-align: -4px; }
+  .reviewer {
+    display: flex; align-items: center; gap: 12px; margin-top: 20px;
+    padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .reviewer-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; color: white;
+  }
+  .reviewer-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; }
+  .reviewer-role { font-size: 0.75rem; color: var(--gray-500); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--navy); }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start; }
+  .contact-info h2 {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: 16px;
+  }
+  .contact-info p {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    color: var(--gray-500); line-height: 1.8; margin-bottom: 32px;
+  }
+  .contact-details { display: flex; flex-direction: column; gap: 16px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,107,26,0.07); border: 1px solid rgba(255,107,26,0.15);
+    border-radius: 10px; padding: 14px 18px;
+  }
+  .contact-item-icon { font-size: 1.4rem; }
+  .contact-item-text .label { font-size: 0.72rem; color: var(--orange); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .contact-item-text .value { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 600; color: var(--white); }
+  .contact-form {
+    background: linear-gradient(145deg, #122040, #0F1A2E);
+    border: 1px solid rgba(255,107,26,0.2);
+    border-radius: 20px; padding: 40px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    display: block; font-size: 0.82rem; font-weight: 600;
+    color: var(--gray-200); margin-bottom: 7px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; padding: 12px 16px;
+    color: var(--white); font-size: 0.92rem;
+    font-family: 'Noto Sans Tamil', 'Inter', sans-serif;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--gray-500); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--orange);
+    background: rgba(255,107,26,0.05);
+  }
+  .form-group select { cursor: pointer; }
+  .form-group select option { background: #122040; }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    border: none; border-radius: 8px;
+    color: white; font-size: 1rem; font-weight: 700;
+    font-family: 'Noto Sans Tamil', sans-serif;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px var(--orange-glow);
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,26,0.5); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060E1C;
+    border-top: 1px solid rgba(255,107,26,0.2);
+    padding: 60px 5% 30px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 48px;
+  }
+  .footer-brand p {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.87rem; color: var(--gray-500);
+    line-height: 1.8; margin-top: 12px; max-width: 280px;
+  }
+  .footer-col h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem; font-weight: 700; color: var(--white);
+    margin-bottom: 16px; letter-spacing: 0.5px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.85rem; color: var(--gray-500);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--orange); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
+  }
+  .footer-bottom p { font-size: 0.8rem; color: var(--gray-500); }
+  .footer-bottom span { color: var(--orange); }
+  .footer-seo { font-size: 0.7rem; color: rgba(255,255,255,0.15); max-width: 600px; }
+
+  /* ── WHATSAPP FLOAT ── */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    display: flex; align-items: center; gap: 10px;
+    background: #25D366; color: white;
+    padding: 12px 20px; border-radius: 50px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: waBounce 2s 2s ease-in-out;
+    font-family: 'Noto Sans Tamil', sans-serif;
+  }
+  .wa-float:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 32px rgba(37,211,102,0.5); }
+  .wa-float svg { width: 22px; height: 22px; flex-shrink: 0; }
+  @keyframes waBounce {
+    0%,100%{transform:translateY(0)} 20%{transform:translateY(-8px)} 40%{transform:translateY(0)} 60%{transform:translateY(-5px)} 80%{transform:translateY(0)}
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE ── */
+  @media(max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: fixed; top: 68px; left: 0; right: 0;
+      background: rgba(10,22,40,0.97);
+      padding: 24px 5%;
+      border-bottom: 1px solid rgba(255,107,26,0.2);
+    }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-visual { display: none; }
+    .contact-wrap { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    /* hero-map-canvas hidden globally now */
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media(max-width: 600px) {
+    section { padding: 60px 5%; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .wa-float span { display: none; }
+    .wa-float { padding: 14px; border-radius: 50%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">
+    <div class="nav-logo-icon">🛰️</div>
+    <div>
+      <div class="nav-logo-text">BLACKBUCK GPS</div>
+      <div class="nav-logo-sub">& FASTAG SOLUTIONS</div>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">சேவைகள்</a></li>
+    <li><a href="#why">ஏன் நாங்கள்?</a></li>
+    <li><a href="#reviews">கருத்துக்கள்</a></li>
+    <li><a href="#contact">தொடர்பு</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/918248895908">📞 இப்போது அழைக்கவும்</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <canvas id="trackingCanvas"></canvas>
+  <div class="map-grid"></div>
+  <div class="hero-overlay"></div>
+
+  <!-- Legacy SVG panel -->
+  <div class="hero-map-canvas" style="display:none">
+    <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+      <!-- Map blocks - satellite style -->
+      <rect x="0" y="0" width="700" height="700" fill="#0a1628"/>
+      <rect x="0" y="0" width="700" height="700" fill="url(#sat)" opacity="0.4"/>
+      <!-- Road grid -->
+      <line x1="0" y1="350" x2="700" y2="350" stroke="#1e3a5f" stroke-width="8" opacity="0.6"/>
+      <line x1="350" y1="0" x2="350" y2="700" stroke="#1e3a5f" stroke-width="8" opacity="0.6"/>
+      <line x1="0" y1="180" x2="700" y2="180" stroke="#1e3a5f" stroke-width="3" opacity="0.4"/>
+      <line x1="0" y1="520" x2="700" y2="520" stroke="#1e3a5f" stroke-width="3" opacity="0.4"/>
+      <line x1="180" y1="0" x2="180" y2="700" stroke="#1e3a5f" stroke-width="3" opacity="0.4"/>
+      <line x1="520" y1="0" x2="520" y2="700" stroke="#1e3a5f" stroke-width="3" opacity="0.4"/>
+      <!-- City blocks -->
+      <rect x="200" y="200" width="120" height="80" rx="4" fill="#142235" opacity="0.8"/>
+      <rect x="360" y="210" width="100" height="60" rx="4" fill="#142235" opacity="0.8"/>
+      <rect x="220" y="400" width="90" height="90" rx="4" fill="#142235" opacity="0.8"/>
+      <rect x="400" y="380" width="110" height="70" rx="4" fill="#142235" opacity="0.8"/>
+      <rect x="90" y="300" width="70" height="100" rx="4" fill="#142235" opacity="0.7"/>
+      <rect x="540" y="280" width="80" height="120" rx="4" fill="#142235" opacity="0.7"/>
+      <!-- Route 1 -->
+      <path class="route-path" d="M 80 600 Q 150 550 200 480 Q 250 400 300 350 Q 380 290 450 250 Q 520 200 620 150" fill="none" stroke="#FF6B1A" stroke-width="3" stroke-linecap="round"/>
+      <!-- Route 2 -->
+      <path class="route-path2" d="M 100 200 Q 180 250 260 300 Q 340 350 380 420 Q 430 500 500 560" fill="none" stroke="#FFB347" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 4"/>
+      <!-- Route 3 -->
+      <path class="route-path3" d="M 600 100 Q 550 200 480 280 Q 420 340 360 380 Q 280 430 200 500" fill="none" stroke="#4AFF9F" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+      <!-- Location pins -->
+      <g class="pin-pulse" style="animation-delay:3.1s">
+        <circle cx="300" cy="350" r="14" fill="rgba(255,107,26,0.2)" stroke="#FF6B1A" stroke-width="2"/>
+        <circle cx="300" cy="350" r="6" fill="#FF6B1A"/>
+        <text x="300" y="330" text-anchor="middle" fill="#FF6B1A" font-size="9" font-family="Rajdhani,sans-serif" font-weight="700">CHENNAI</text>
+      </g>
+      <g class="pin-pulse" style="animation-delay:3.4s">
+        <circle cx="450" cy="250" r="10" fill="rgba(255,179,71,0.2)" stroke="#FFB347" stroke-width="2"/>
+        <circle cx="450" cy="250" r="5" fill="#FFB347"/>
+        <text x="450" y="230" text-anchor="middle" fill="#FFB347" font-size="9" font-family="Rajdhani,sans-serif" font-weight="700">COIMBATORE</text>
+      </g>
+      <g class="pin-pulse" style="animation-delay:3.7s">
+        <circle cx="200" cy="480" r="10" fill="rgba(74,255,159,0.2)" stroke="#4AFF9F" stroke-width="2"/>
+        <circle cx="200" cy="480" r="5" fill="#4AFF9F"/>
+        <text x="200" y="460" text-anchor="middle" fill="#4AFF9F" font-size="9" font-family="Rajdhani,sans-serif" font-weight="700">MADURAI</text>
+      </g>
+      <g class="pin-pulse" style="animation-delay:4s">
+        <circle cx="620" cy="150" r="10" fill="rgba(255,107,26,0.2)" stroke="#FF6B1A" stroke-width="2"/>
+        <circle cx="620" cy="150" r="5" fill="#FF6B1A"/>
+        <text x="620" y="132" text-anchor="middle" fill="#FF6B1A" font-size="9" font-family="Rajdhani,sans-serif" font-weight="700">SALEM</text>
+      </g>
+      <!-- Moving vehicle -->
+      <circle r="7" fill="#FF6B1A" style="offset-path:path('M 80 600 Q 150 550 200 480 Q 250 400 300 350 Q 380 290 450 250 Q 520 200 620 150'); animation:moveDot 4s 3.5s linear infinite;">
+        <animate attributeName="r" values="7;9;7" dur="1s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Signal rings -->
+      <circle cx="300" cy="350" r="20" fill="none" stroke="#FF6B1A" stroke-width="1.5" opacity="0">
+        <animate attributeName="r" values="14;40" dur="2s" begin="3.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;0" dur="2s" begin="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="350" r="20" fill="none" stroke="#FF6B1A" stroke-width="1" opacity="0">
+        <animate attributeName="r" values="14;55" dur="2s" begin="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0" dur="2s" begin="4s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Satellite icon -->
+      <g transform="translate(580,80)" opacity="0.6">
+        <rect x="-15" y="-4" width="30" height="8" rx="2" fill="#2a4d7f"/>
+        <rect x="-4" y="-15" width="8" height="30" rx="2" fill="#2a4d7f"/>
+        <circle cx="0" cy="0" r="6" fill="#FF6B1A" opacity="0.8"/>
+      </g>
+      <defs>
+        <pattern id="sat" width="40" height="40" patternUnits="userSpaceOnUse">
+          <rect width="40" height="40" fill="none"/>
+          <line x1="0" y1="0" x2="40" y2="40" stroke="#1e3a5f" stroke-width="0.5" opacity="0.3"/>
+        </pattern>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">🛰️ LIVE GPS TRACKING — TAMIL NADU</div>
+    <h1 class="hero-h1 tamil">
+      உங்கள் வாகனத்தின்<br>
+      பாதுகாப்பு <span>எங்கள் பொறுப்பு</span>
+    </h1>
+    <p class="hero-sub">
+      GPS Tracking, FASTag, AIS-140 GPS, Fuel Monitoring மற்றும் Fleet Management சேவைகள் — Karaikudi, Devakottai, Pudukottai, Thiruppathur, Aranthangi, Manamelkudi, Singampunari மற்றும் தமிழ்நாடு முழுவதும்.
+    </p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#contact">📞 இப்போது தொடர்புகொள்ளுங்கள்</a>
+      <a class="btn-secondary" href="https://wa.me/918248895908">💬 இலவச ஆலோசனை பெறுங்கள்</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-pill"><span class="icon">✓</span> <span>AIS-140 Certified</span></div>
+      <div class="trust-pill"><span class="icon">✓</span> <span>24×7 Support</span></div>
+      <div class="trust-pill"><span class="icon">✓</span> <span>5000+ Devices</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <p class="section-label">OUR SERVICES</p>
+    <h2 class="section-title">எங்கள் <span>சேவைகள்</span></h2>
+    <p class="section-desc">தமிழ்நாடு முழுவதும் தொழில்முறை GPS & FASTag சேவைகள் வழங்குகிறோம்.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🛰️</div>
+      <h3>GPS <span>Tracking</span></h3>
+      <p class="service-sub tamil">நேரடி வாகன கண்காணிப்பு</p>
+      <ul class="service-list">
+        <li>மொபைல் App மூலம் Live Tracking</li>
+        <li>Geofence Alert System</li>
+        <li>Engine ON/OFF Monitoring</li>
+        <li>Travel History Reports</li>
+        <li>Speed Alert & Notifications</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💳</div>
+      <h3>FASTag <span>Service</span></h3>
+      <p class="service-sub tamil">விரைவான FASTag தீர்வுகள்</p>
+      <ul class="service-list">
+        <li>புதிய FASTag வழங்குதல்</li>
+        <li>FASTag KYC Update</li>
+        <li>FASTag Recharge சேவை</li>
+        <li>FASTag Closure Support</li>
+        <li>Online & Offline Assistance</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🏛️</div>
+      <h3>AIS-140 <span>GPS</span></h3>
+      <p class="service-sub tamil">அரசு அங்கீகாரம் பெற்ற GPS</p>
+      <ul class="service-list">
+        <li>Government Approved Devices</li>
+        <li>School Bus GPS Solutions</li>
+        <li>Commercial Vehicle Compliance</li>
+        <li>Emergency SOS Button</li>
+        <li>VLTD Certification Support</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">⛽</div>
+      <h3>Fuel <span>Monitoring</span></h3>
+      <p class="service-sub tamil">எரிபொருள் கண்காணிப்பு</p>
+      <ul class="service-list">
+        <li>Fuel Sensor Installation</li>
+        <li>Fuel Theft Detection Alert</li>
+        <li>Real-time Fuel Level Monitor</li>
+        <li>Fuel Usage Reports</li>
+        <li>Cost Analysis Dashboard</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🚛</div>
+      <h3>Fleet <span>Management</span></h3>
+      <p class="service-sub tamil">பல வாகன கண்காணிப்பு</p>
+      <ul class="service-list">
+        <li>Multiple Vehicle Tracking</li>
+        <li>Driver Monitoring System</li>
+        <li>Route Optimization</li>
+        <li>Maintenance Alerts</li>
+        <li>Fleet Performance Reports</li>
+      </ul>
+    </div>
+    <div class="service-card reveal" style="background:linear-gradient(145deg,rgba(255,107,26,0.12),rgba(255,107,26,0.04)); border-color:rgba(255,107,26,0.3)">
+      <div class="service-icon" style="background:linear-gradient(135deg,var(--orange),var(--gold)); border:none">📞</div>
+      <h3 style="color:var(--orange)">24×7 <span style="color:var(--white)">Support</span></h3>
+      <p class="service-sub tamil">எப்போதும் உங்களுக்காக</p>
+      <ul class="service-list">
+        <li>Round-the-clock Helpline</li>
+        <li>WhatsApp Support</li>
+        <li>On-site Technical Team</li>
+        <li>Remote Troubleshooting</li>
+        <li>Annual Maintenance Contract</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="5000">0</div>
+      <div class="stat-divider"></div>
+      <p class="stat-label tamil">GPS Devices Installed</p>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="3000">0</div>
+      <div class="stat-divider"></div>
+      <p class="stat-label tamil">FASTag வாடிக்கையாளர்கள்</p>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="1000">0</div>
+      <div class="stat-divider"></div>
+      <p class="stat-label tamil">Fleet Vehicles Managed</p>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number">24×7</div>
+      <div class="stat-divider"></div>
+      <p class="stat-label tamil">Support Available</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="why-grid">
+    <div>
+      <div class="section-label reveal">WHY CHOOSE US</div>
+      <h2 class="section-title reveal">ஏன் எங்களை <span>தேர்வு செய்ய வேண்டும்?</span></h2>
+      <p class="section-desc reveal" style="margin-bottom:36px">தமிழ்நாட்டின் நம்பகமான GPS & FASTag சேவை வழங்குநர் — ஆயிரக்கணக்கான வாடிக்கையாளர்களின் நம்பிக்கை.</p>
+      <div class="why-points">
+        <div class="why-point reveal">
+          <div class="why-check">✓</div>
+          <div class="why-text">
+            <h4>தமிழ்நாடு முழுவதும் சேவை</h4>
+            <p>Karaikudi, Devakottai, Pudukottai, Thiruppathur, Aranthangi, Manamelkudi, Singampunari உட்பட தமிழ்நாடு முழுவதும் சேவை.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <div class="why-check">✓</div>
+          <div class="why-text">
+            <h4>வேகமான Installation</h4>
+            <p>Same-day GPS installation with professional certified technicians.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <div class="why-check">✓</div>
+          <div class="why-text">
+            <h4>Affordable Pricing</h4>
+            <p>போட்டியிடக்கூடிய விலையில் உயர்தர சேவை — No hidden charges.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <div class="why-check">✓</div>
+          <div class="why-text">
+            <h4>Professional Technical Team</h4>
+            <p>அனுபவம் வாய்ந்த தொழில்நுட்ப வல்லுநர்கள் உங்கள் சேவைக்கு.</p>
+          </div>
+        </div>
+        <div class="why-point reveal">
+          <div class="why-check">✓</div>
+          <div class="why-text">
+            <h4>Thousands of Happy Customers</h4>
+            <p>ஆயிரக்கணக்கான திருப்தியான வாடிக்கையாளர்களின் நம்பகமான தேர்வு.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:0.75rem;color:var(--orange);letter-spacing:2px;margin-bottom:20px">LIVE DASHBOARD</div>
+      <div class="why-visual-inner">
+        <div class="why-mini-card">
+          <span class="icon">🚗</span>
+          <p>Active Vehicles<br><strong style="color:var(--orange);font-family:Rajdhani">247</strong></p>
+        </div>
+        <div class="why-mini-card">
+          <span class="icon">⛽</span>
+          <p>Fuel Saved<br><strong style="color:var(--gold);font-family:Rajdhani">₹2.4L</strong></p>
+        </div>
+        <div class="why-mini-card">
+          <span class="icon">🛣️</span>
+          <p>Distance Today<br><strong style="color:var(--orange);font-family:Rajdhani">18,400 km</strong></p>
+        </div>
+        <div class="why-mini-card">
+          <span class="icon">🔔</span>
+          <p>Alerts Today<br><strong style="color:#4AFF9F;font-family:Rajdhani">12</strong></p>
+        </div>
+      </div>
+      <div style="margin-top:24px;padding:16px;background:rgba(255,107,26,0.08);border:1px solid rgba(255,107,26,0.2);border-radius:10px">
+        <div style="font-size:0.72rem;color:var(--orange);font-weight:600;margin-bottom:8px;font-family:Rajdhani">COVERAGE MAP</div>
+        <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- Rough Tamil Nadu shape -->
+          <path d="M100,10 L180,20 L220,60 L230,100 L200,140 L150,155 L100,145 L60,120 L40,80 L60,40 Z" fill="rgba(255,107,26,0.1)" stroke="#FF6B1A" stroke-width="1.5"/>
+          <circle cx="140" cy="60" r="4" fill="#FF6B1A"/><text x="147" y="63" fill="#ccc" font-size="8" font-family="Rajdhani">Karaikudi</text>
+          <circle cx="100" cy="80" r="3" fill="#FFB347"/><text x="107" y="83" fill="#ccc" font-size="8" font-family="Rajdhani">Devakottai</text>
+          <circle cx="145" cy="110" r="3" fill="#4AFF9F"/><text x="152" y="113" fill="#ccc" font-size="8" font-family="Rajdhani">Pudukottai</text>
+          <circle cx="120" cy="45" r="3" fill="#FF6B1A"/><text x="127" y="48" fill="#ccc" font-size="8" font-family="Rajdhani">Thiruppathur</text>
+          <!-- Coverage signal -->
+          <circle cx="140" cy="60" r="12" fill="none" stroke="#FF6B1A" stroke-width="0.5" opacity="0.5">
+            <animate attributeName="r" values="4;25" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.8;0" dur="2s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+        <div style="font-family:'Noto Sans Tamil',sans-serif;font-size:0.78rem;color:var(--gray-500);margin-top:8px;text-align:center">Karaikudi • Devakottai • Pudukottai • Thiruppathur • Aranthangi & More</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" style="background:#0D1E35">
+  <div class="section-header reveal">
+    <p class="section-label">TESTIMONIALS</p>
+    <h2 class="section-title">வாடிக்கையாளர் <span>கருத்துக்கள்</span></h2>
+    <p class="section-desc">எங்கள் சேவை பெற்ற வாடிக்கையாளர்களின் அனுபவங்கள்.</p>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">GPS Tracking மிகவும் துல்லியமாக வேலை செய்கிறது. என் லாரிகள் எங்கு இருக்கின்றன என்று எந்த நேரத்திலும் தெரிகிறது. சேவை அருமை!</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">ர</div>
+        <div>
+          <div class="reviewer-name">ராஜசேகர் மோகன்</div>
+          <div class="reviewer-role">Transport Business Owner, Karaikudi</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">FASTag மற்றும் GPS இரண்டிற்கும் சிறந்த சேவை. Installation மிகவும் வேகமாக செய்தார்கள். விலையும் மிகவும் சரியாக இருக்கிறது.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">ம</div>
+        <div>
+          <div class="reviewer-name">மாரிமுத்து செல்வம்</div>
+          <div class="reviewer-role">Fleet Owner, Devakottai</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">AIS-140 GPS Installation மிகவும் Professional ஆக செய்தார்கள். Support Team மிகவும் Responsive. நான் அனைவருக்கும் பரிந்துரைக்கிறேன்.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">க</div>
+        <div>
+          <div class="reviewer-name">கருப்பசாமி வேலு</div>
+          <div class="reviewer-role">School Bus Operator, Pudukottai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-info reveal">
+      <p class="section-label">CONTACT US</p>
+      <h2 class="section-title tamil">எங்களை <span>தொடர்புகொள்ளுங்கள்</span></h2>
+      <p class="section-desc" style="margin-bottom:32px">உங்கள் GPS & FASTag தேவைகளுக்கு இப்போதே தொடர்புகொள்ளுங்கள். இலவச ஆலோசனை பெறுங்கள்!</p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <span class="contact-item-icon">📞</span>
+          <div class="contact-item-text">
+            <div class="label">PHONE / WHATSAPP</div>
+            <div class="value">+91 82488 95908</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-icon">📧</span>
+          <div class="contact-item-text">
+            <div class="label">EMAIL</div>
+            <div class="value">5nd4uu@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-icon">📍</span>
+          <div class="contact-item-text">
+            <div class="label">LOCATION</div>
+            <div class="value">Karaikudi, Tamil Nadu</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-icon">🕐</span>
+          <div class="contact-item-text">
+            <div class="label">WORKING HOURS</div>
+            <div class="value">24×7 Support Available</div>
+          </div>
+        </div>
+        <a href="https://wa.me/918248895908" style="display:flex;align-items:center;gap:12px;background:#25D366;border-radius:10px;padding:16px 20px;text-decoration:none;color:white;font-weight:700;font-family:'Noto Sans Tamil',sans-serif;transition:transform 0.2s,box-shadow 0.2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.063.526 3.997 1.448 5.682L0 24l6.47-1.429A11.949 11.949 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.86 0-3.594-.5-5.084-1.371l-.361-.215-3.742.826.843-3.651-.235-.376A9.964 9.964 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          <span>WhatsApp மூலம் உடனே தொடர்பு கொள்ளுங்கள்</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <h3 style="font-family:'Noto Sans Tamil',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:24px;color:var(--orange)">இலவச ஆலோசனை பெறுங்கள்</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>பெயர் *</label>
+          <input type="text" placeholder="உங்கள் பெயர்">
+        </div>
+        <div class="form-group">
+          <label>மொபைல் எண் *</label>
+          <input type="tel" placeholder="+91 00000 00000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>வாகன வகை</label>
+        <select>
+          <option value="">வாகன வகையை தேர்வு செய்யுங்கள்</option>
+          <option>Car / கார்</option>
+          <option>Truck / லாரி</option>
+          <option>Bus / பேருந்து</option>
+          <option>School Bus</option>
+          <option>Auto / ஆட்டோ</option>
+          <option>Bike / இரு சக்கர வாகனம்</option>
+          <option>Fleet (Multiple Vehicles)</option>
+          <option>Other / மற்றவை</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>தேவையான சேவை</label>
+        <select>
+          <option value="">சேவையை தேர்வு செய்யுங்கள்</option>
+          <option>GPS Tracking System</option>
+          <option>FASTag Service</option>
+          <option>AIS-140 GPS</option>
+          <option>Fuel Monitoring</option>
+          <option>Fleet Management</option>
+          <option>All Services</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>செய்தி</label>
+        <textarea placeholder="உங்கள் தேவைகளை இங்கு விவரிக்கவும்..."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit(this)">📨 இப்போது அனுப்புங்கள்</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<!-- SERVICE AREAS -->
+<section id="areas" style="background:#060E1C; padding:60px 5%;">
+  <div style="text-align:center;margin-bottom:40px">
+    <p style="font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:10px">SERVICE AREAS</p>
+    <h2 style="font-family:'Noto Sans Tamil',sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--white)">நாங்கள் சேவை வழங்கும் <span style="color:var(--orange)">பகுதிகள்</span></h2>
+    <p style="font-family:'Noto Sans Tamil',sans-serif;font-size:0.9rem;color:var(--gray-500);margin-top:10px">முக்கிய சேவை மையங்கள் மற்றும் தமிழ்நாடு முழுவதும் கவரேஜ்</p>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:32px">
+    <div style="background:linear-gradient(135deg,var(--orange),var(--gold));color:white;padding:10px 22px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.95rem;display:flex;align-items:center;gap:8px">📍 Karaikudi <span style="font-size:0.7rem;opacity:0.85;font-weight:400">HEAD OFFICE</span></div>
+    <div style="background:rgba(255,107,26,0.12);border:1px solid rgba(255,107,26,0.35);color:var(--white);padding:10px 22px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.9rem">📍 Devakottai</div>
+    <div style="background:rgba(255,107,26,0.12);border:1px solid rgba(255,107,26,0.35);color:var(--white);padding:10px 22px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.9rem">📍 Pudukottai</div>
+    <div style="background:rgba(255,107,26,0.12);border:1px solid rgba(255,107,26,0.35);color:var(--white);padding:10px 22px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.9rem">📍 Thiruppathur</div>
+    <div style="background:rgba(255,107,26,0.12);border:1px solid rgba(255,107,26,0.35);color:var(--white);padding:10px 22px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.9rem">📍 Aranthangi</div>
+    <div style="background:rgba(255,107,26,0.12);border:1px solid rgba(255,107,26,0.35);color:var(--white);padding:10px 22px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.9rem">📍 Manamelkudi</div>
+    <div style="background:rgba(255,107,26,0.12);border:1px solid rgba(255,107,26,0.35);color:var(--white);padding:10px 22px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.9rem">📍 Singampunari</div>
+  </div>
+  <div style="text-align:center;background:rgba(255,107,26,0.07);border:1px dashed rgba(255,107,26,0.3);border-radius:14px;padding:20px 30px;max-width:600px;margin:0 auto">
+    <div style="font-size:1.4rem;margin-bottom:8px">🗺️</div>
+    <p style="font-family:'Noto Sans Tamil',sans-serif;font-size:0.95rem;color:var(--gray-200);line-height:1.8">
+      மேலே உள்ள பகுதிகள் தவிர <strong style="color:var(--orange)">தமிழ்நாடு முழுவதும்</strong> GPS Tracking & FASTag சேவைகள் வழங்குகிறோம்.<br>
+      உங்கள் பகுதியில் சேவை தேவையா? <a href="https://wa.me/918248895908" style="color:var(--orange);font-weight:700;text-decoration:none">இப்போதே தொடர்புகொள்ளுங்கள் →</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--orange),var(--gold));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">🛰️</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700">BLACKBUCK GPS<br><span style="color:var(--orange);font-size:0.7rem;letter-spacing:1px">& FASTAG SOLUTIONS</span></div>
+      </div>
+      <p class="tamil">தமிழ்நாட்டின் நம்பகமான GPS Tracking & FASTag Service வழங்குநர். ஆயிரக்கணக்கான வாடிக்கையாளர்களுக்கு சிறந்த சேவை வழங்கி வருகிறோம்.</p>
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <a href="https://wa.me/918248895908" style="width:36px;height:36px;background:#25D366;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none">💬</a>
+        <a href="#" style="width:36px;height:36px;background:#1877F2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none">📘</a>
+        <a href="#" style="width:36px;height:36px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>NAVIGATION</h4>
+      <ul>
+        <li><a href="#hero">முகப்பு</a></li>
+        <li><a href="#services">சேவைகள்</a></li>
+        <li><a href="#why">எங்களை பற்றி</a></li>
+        <li><a href="#reviews">வாடிக்கையாளர் கருத்துக்கள்</a></li>
+        <li><a href="#contact">தொடர்பு</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>SERVICES</h4>
+      <ul>
+        <li><a href="#services">GPS Tracking</a></li>
+        <li><a href="#services">FASTag Service</a></li>
+        <li><a href="#services">AIS-140 GPS</a></li>
+        <li><a href="#services">Fuel Monitoring</a></li>
+        <li><a href="#services">Fleet Management</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>CONTACT</h4>
+      <ul>
+        <li><a href="tel:+918248895908">📞 +91 82488 95908</a></li>
+        <li><a href="mailto:5nd4uu@gmail.com">📧 5nd4uu@gmail.com</a></li>
+        <li><a href="https://wa.me/918248895908">💬 WhatsApp Chat</a></li>
+        <li><a href="#contact">📍 Karaikudi, Tamil Nadu</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 <span>Blackbuck GPS & FASTag Solutions</span>. All Rights Reserved.</p>
+    <p class="footer-seo">GPS Tracking Tamil Nadu | GPS Tracker Karaikudi | FASTag Services Karaikudi | GPS Tracking Devakottai | GPS Tracker Pudukottai | FASTag Thiruppathur | GPS Aranthangi | GPS Manamelkudi | GPS Singampunari | AIS 140 GPS Tamil Nadu | Vehicle Tracking System | Fleet Management Tamil Nadu | Fuel Monitoring System | Commercial Vehicle GPS</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/918248895908" target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.063.526 3.997 1.448 5.682L0 24l6.47-1.429A11.949 11.949 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.86 0-3.594-.5-5.084-1.371l-.361-.215-3.742.826.843-3.651-.235-.376A9.964 9.964 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+  </svg>
+  <span>WhatsApp மூலம் தொடர்பு</span>
+</a>
+
+<script>
+// Nav toggle
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+// Nav shadow on scroll
+window.addEventListener('scroll',()=>{
+  const n=document.getElementById('navbar');
+  n.style.background=window.scrollY>40?'rgba(10,22,40,0.97)':'rgba(10,22,40,0.92)';
+});
+
+// Reveal on scroll
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'), i*80);
+    }
+  });
+},{threshold:0.12});
+reveals.forEach(r=>obs.observe(r));
+
+// Counter animation
+function animateCounter(el,target,suffix=''){
+  let current=0;
+  const step=Math.ceil(target/60);
+  const timer=setInterval(()=>{
+    current=Math.min(current+step,target);
+    el.textContent=current.toLocaleString('en-IN')+(suffix||'+');
+    if(current>=target){clearInterval(timer);el.textContent=target.toLocaleString('en-IN')+'+';}
+  },25);
+}
+const statsObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const nums=document.querySelectorAll('[data-target]');
+      nums.forEach(n=>{
+        const t=parseInt(n.getAttribute('data-target'));
+        animateCounter(n,t,'');
+      });
+      statsObs.disconnect();
+    }
+  });
+},{threshold:0.3});
+const statsEl=document.getElementById('stats');
+if(statsEl) statsObs.observe(statsEl);
+
+// Form submit
+function handleSubmit(btn){
+  const orig=btn.textContent;
+  btn.textContent='✅ அனுப்பப்பட்டது! விரைவில் தொடர்புகொள்வோம்.';
+  btn.style.background='linear-gradient(135deg,#25D366,#1aaa50)';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='';},4000);
+}
+
+
+// ══════════════════════════════════════════════════════
+//  FULL-SCREEN VEHICLE TRACKING CANVAS ANIMATION
+// ══════════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('trackingCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Color palette
+  const C = {
+    road:      '#1a2f4a',
+    roadLight: '#2a4d7f',
+    orange:    '#FF6B1A',
+    gold:      '#FFB347',
+    green:     '#4AFF9F',
+    blue:      '#3B9EFF',
+    white:     'rgba(255,255,255,0.85)',
+    bg:        '#070f1c',
+  };
+
+  // Vehicle icons as emoji drawn via fillText
+  const VEHICLE_EMOJI = ['🚛','🚗','🚌','🚐','🚚'];
+
+  let W, H;
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ── Road network ──
+  function buildRoads() {
+    const roads = [];
+    // Horizontal highways
+    for (let i = 1; i <= 5; i++) {
+      roads.push({ x1:0, y1:H*i/6, x2:W, y2:H*i/6, w:i===3?6:3, color:i===3?C.roadLight:C.road });
+    }
+    // Vertical highways
+    for (let i = 1; i <= 5; i++) {
+      roads.push({ x1:W*i/6, y1:0, x2:W*i/6, y2:H, w:i===3?6:3, color:i===3?C.roadLight:C.road });
+    }
+    // Diagonal expressways
+    roads.push({ x1:0,   y1:0,   x2:W,   y2:H,   w:2, color:C.road });
+    roads.push({ x1:W,   y1:0,   x2:0,   y2:H,   w:2, color:C.road });
+    roads.push({ x1:0,   y1:H/3, x2:W*0.6, y2:0,  w:2, color:C.road });
+    roads.push({ x1:W*0.4,y1:H,  x2:W,   y2:H*0.6,w:2, color:C.road });
+    return roads;
+  }
+
+  // ── Location pins ──
+  const CITIES = [
+    { name:'Karaikudi',    cx:0.38, cy:0.55, color:C.orange, primary:true },
+    { name:'Devakottai',   cx:0.52, cy:0.62, color:C.gold   },
+    { name:'Pudukottai',   cx:0.30, cy:0.42, color:C.green  },
+    { name:'Thiruppathur', cx:0.60, cy:0.38, color:C.blue   },
+    { name:'Aranthangi',   cx:0.24, cy:0.65, color:C.orange },
+    { name:'Manamelkudi',  cx:0.45, cy:0.75, color:C.gold   },
+    { name:'Singampunari', cx:0.62, cy:0.58, color:C.green  },
+  ];
+
+  // Pulse state per city
+  const pinPulses = CITIES.map(c => ({ r: c.primary?18:12, alpha:0.9, phase: Math.random()*Math.PI*2 }));
+
+  // ── Vehicle paths through the road network ──
+  function makePath(city, idx) {
+    const cx = city.cx * W, cy = city.cy * H;
+    // Each vehicle travels between two cities
+    const dest = CITIES[(idx + 3) % CITIES.length];
+    const dx = dest.cx * W, dy = dest.cy * H;
+    // Waypoints: go via road intersections
+    const mx = (cx + dx) / 2 + (Math.random()-0.5)*W*0.15;
+    const my = (cy + dy) / 2 + (Math.random()-0.5)*H*0.15;
+    return [
+      { x: cx, y: cy },
+      { x: mx, y: my },
+      { x: dx, y: dy },
+    ];
+  }
+
+  // ── Vehicles ──
+  const VEHICLE_COLORS = [C.orange, C.gold, C.green, C.blue, '#FF4AFF'];
+  const NUM_VEHICLES = 8;
+
+  class Vehicle {
+    constructor(id) {
+      this.id       = id;
+      this.color    = VEHICLE_COLORS[id % VEHICLE_COLORS.length];
+      this.emoji    = VEHICLE_EMOJI[id % VEHICLE_EMOJI.length];
+      this.speed    = 0.0008 + Math.random()*0.0006;
+      this.t        = Math.random(); // position along path [0–1]
+      this.pathIdx  = id % CITIES.length;
+      this.trail    = [];
+      this.maxTrail = 60;
+      this.rebuildPath();
+    }
+    rebuildPath() {
+      this.waypoints = makePath(CITIES[this.pathIdx], this.id);
+      this.pathIdx   = (this.pathIdx + 1) % CITIES.length;
+    }
+    // Catmull-Rom position along waypoints
+    pos(t) {
+      const pts = this.waypoints;
+      const segs = pts.length - 1;
+      const seg  = Math.min(Math.floor(t * segs), segs - 1);
+      const lt   = (t * segs) - seg;
+      const p0   = pts[Math.max(seg-1, 0)];
+      const p1   = pts[seg];
+      const p2   = pts[Math.min(seg+1, segs)];
+      const p3   = pts[Math.min(seg+2, segs)];
+      // Catmull-Rom
+      const cx1 = p1.x + (p2.x - p0.x)/6;
+      const cy1 = p1.y + (p2.y - p0.y)/6;
+      const cx2 = p2.x - (p3.x - p1.x)/6;
+      const cy2 = p2.y - (p3.y - p1.y)/6;
+      const mt  = 1 - lt;
+      return {
+        x: mt*mt*mt*p1.x + 3*mt*mt*lt*cx1 + 3*mt*lt*lt*cx2 + lt*lt*lt*p2.x,
+        y: mt*mt*mt*p1.y + 3*mt*mt*lt*cy1 + 3*mt*lt*lt*cy2 + lt*lt*lt*p2.y,
+      };
+    }
+    update(dt) {
+      this.t += this.speed * dt;
+      if (this.t >= 1) {
+        this.t = 0;
+        this.trail = [];
+        this.rebuildPath();
+      }
+      const p = this.pos(this.t);
+      this.x = p.x; this.y = p.y;
+      this.trail.push({ x: p.x, y: p.y, a: 1 });
+      if (this.trail.length > this.maxTrail) this.trail.shift();
+    }
+    draw(ctx) {
+      // Trail
+      if (this.trail.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(this.trail[0].x, this.trail[0].y);
+        for (let i = 1; i < this.trail.length; i++) {
+          ctx.lineTo(this.trail[i].x, this.trail[i].y);
+        }
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth   = 2;
+        ctx.globalAlpha = 0.45;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      // Glowing dot
+      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 14);
+      grd.addColorStop(0,   this.color);
+      grd.addColorStop(0.4, this.color + 'AA');
+      grd.addColorStop(1,   this.color + '00');
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 14, 0, Math.PI*2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      // Core dot
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 5, 0, Math.PI*2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+
+      // Vehicle emoji
+      ctx.font = '14px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(this.emoji, this.x, this.y - 18);
+
+      // Speed label
+      const spd = Math.round(40 + Math.random()*60);
+      ctx.font = 'bold 9px Rajdhani,sans-serif';
+      ctx.fillStyle = this.color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(spd + ' km/h', this.x, this.y + 8);
+    }
+  }
+
+  // ── Data packets flying along routes ──
+  class Packet {
+    constructor(vehicles) {
+      const v = vehicles[Math.floor(Math.random()*vehicles.length)];
+      this.color = v.color;
+      // random t slightly behind vehicle
+      this.vehicleRef = v;
+      this.t = v.t - 0.05;
+      this.alive = true;
+    }
+    update() {
+      this.t += 0.003;
+      if (this.t >= this.vehicleRef.t || this.t >= 1) this.alive = false;
+    }
+    draw(ctx) {
+      const p = this.vehicleRef.pos(Math.max(0, this.t));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = 0.7;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  const roads    = buildRoads();
+  const vehicles = Array.from({length: NUM_VEHICLES}, (_, i) => new Vehicle(i));
+  let   packets  = [];
+  let   lastTime = 0;
+  let   tick     = 0;
+
+  function drawRoads() {
+    roads.forEach(r => {
+      ctx.beginPath();
+      ctx.moveTo(r.x1, r.y1);
+      ctx.lineTo(r.x2, r.y2);
+      ctx.strokeStyle = r.color;
+      ctx.lineWidth   = r.w;
+      ctx.globalAlpha = 0.5;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  function drawCityBlocks() {
+    // Subtle building rectangles
+    const blocks = [
+      {x:0.15,y:0.15,w:0.08,h:0.06}, {x:0.45,y:0.20,w:0.10,h:0.07},
+      {x:0.65,y:0.45,w:0.09,h:0.08}, {x:0.25,y:0.70,w:0.08,h:0.06},
+      {x:0.55,y:0.75,w:0.10,h:0.05}, {x:0.75,y:0.20,w:0.07,h:0.09},
+      {x:0.10,y:0.45,w:0.06,h:0.10}, {x:0.80,y:0.65,w:0.08,h:0.07},
+    ];
+    blocks.forEach(b => {
+      ctx.fillStyle   = 'rgba(20,40,65,0.7)';
+      ctx.strokeStyle = 'rgba(42,77,127,0.5)';
+      ctx.lineWidth   = 1;
+      ctx.beginPath();
+      ctx.roundRect(b.x*W, b.y*H, b.w*W, b.h*H, 3);
+      ctx.fill();
+      ctx.stroke();
+    });
+  }
+
+  function drawPins(now) {
+    CITIES.forEach((city, i) => {
+      const cx = city.cx * W;
+      const cy = city.cy * H;
+      const pp = pinPulses[i];
+      const phase = (now * 0.001 + pp.phase) % (Math.PI*2);
+      const primary = city.primary;
+
+      // Ripple rings
+      for (let r = 0; r < 3; r++) {
+        const rPhase = (phase + r * 0.8) % (Math.PI*2);
+        const rr  = (primary?30:18) * (0.3 + 0.7 * (rPhase / (Math.PI*2)));
+        const ra  = 0.6 * (1 - rPhase / (Math.PI*2));
+        ctx.beginPath();
+        ctx.arc(cx, cy, rr, 0, Math.PI*2);
+        ctx.strokeStyle = city.color;
+        ctx.lineWidth   = primary ? 1.5 : 1;
+        ctx.globalAlpha = ra;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      // Pin body
+      const pinR = primary ? 10 : 7;
+      const grd  = ctx.createRadialGradient(cx, cy, 0, cx, cy, pinR);
+      grd.addColorStop(0, '#fff');
+      grd.addColorStop(0.4, city.color);
+      grd.addColorStop(1, city.color + '88');
+      ctx.beginPath();
+      ctx.arc(cx, cy, pinR, 0, Math.PI*2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      // City label
+      ctx.font        = primary ? 'bold 11px Rajdhani,sans-serif' : 'bold 9px Rajdhani,sans-serif';
+      ctx.textAlign   = 'center';
+      ctx.textBaseline = 'bottom';
+      // Label background
+      const label    = city.name;
+      const tw       = ctx.measureText(label).width + 8;
+      const th       = primary ? 14 : 12;
+      ctx.fillStyle  = 'rgba(7,15,28,0.75)';
+      ctx.beginPath();
+      ctx.roundRect(cx - tw/2, cy - pinR - th - 4, tw, th, 3);
+      ctx.fill();
+      ctx.fillStyle   = city.color;
+      ctx.fillText(label, cx, cy - pinR - 5);
+    });
+  }
+
+  function drawSignalLines(now) {
+    // Draw glowing lines connecting moving vehicles to nearest city
+    vehicles.forEach(v => {
+      const nearest = CITIES.reduce((a, c) => {
+        const dx = c.cx*W - v.x, dy = c.cy*H - v.y;
+        const da = Math.sqrt(dx*dx+dy*dy);
+        const dbx = a.cx*W - v.x, dby = a.cy*H - v.y;
+        const db = Math.sqrt(dbx*dbx+dby*dby);
+        return da < db ? c : a;
+      });
+      const dist = Math.hypot(nearest.cx*W - v.x, nearest.cy*H - v.y);
+      if (dist < W * 0.25) {
+        ctx.beginPath();
+        ctx.moveTo(v.x, v.y);
+        ctx.lineTo(nearest.cx*W, nearest.cy*H);
+        const grad = ctx.createLinearGradient(v.x, v.y, nearest.cx*W, nearest.cy*H);
+        grad.addColorStop(0, v.color + 'CC');
+        grad.addColorStop(1, nearest.color + '00');
+        ctx.strokeStyle = grad;
+        ctx.lineWidth   = 0.8;
+        ctx.globalAlpha = 0.35;
+        ctx.setLineDash([4, 6]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1;
+      }
+    });
+  }
+
+  function drawHUD() {
+    // Top-right mini status panel
+    const px = W - 180, py = 90, pw = 165, ph = 110;
+    ctx.fillStyle   = 'rgba(7,15,28,0.72)';
+    ctx.strokeStyle = 'rgba(255,107,26,0.4)';
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.roundRect(px, py, pw, ph, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.font        = 'bold 9px Rajdhani,sans-serif';
+    ctx.fillStyle   = '#FF6B1A';
+    ctx.textAlign   = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('● LIVE TRACKING', px+12, py+10);
+
+    const rows = [
+      { label:'Active Vehicles', value: NUM_VEHICLES, color:'#4AFF9F' },
+      { label:'Network Status',  value:'ONLINE',       color:'#4AFF9F' },
+      { label:'Coverage',        value:'TN-WIDE',      color:'#FFB347' },
+      { label:'Signal',          value:'STRONG',       color:'#3B9EFF' },
+    ];
+    rows.forEach((r, i) => {
+      const ry = py + 30 + i*18;
+      ctx.font      = '8px Rajdhani,sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.fillText(r.label, px+12, ry);
+      ctx.font      = 'bold 8px Rajdhani,sans-serif';
+      ctx.fillStyle = r.color;
+      ctx.textAlign = 'right';
+      ctx.fillText(r.value, px+pw-10, ry);
+      ctx.textAlign = 'left';
+    });
+  }
+
+  function frame(now) {
+    const dt = now - lastTime;
+    lastTime = now;
+    tick++;
+
+    // Clear
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = C.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    drawCityBlocks();
+    drawRoads();
+    drawSignalLines(now);
+
+    // Spawn packets occasionally
+    if (tick % 40 === 0) {
+      packets.push(new Packet(vehicles));
+      packets = packets.filter(p => p.alive);
+    }
+    packets.forEach(p => { p.update(); p.draw(ctx); });
+
+    vehicles.forEach(v => { v.update(dt); v.draw(ctx); });
+    drawPins(now);
+
+    if (W > 600) drawHUD();
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(ts => { lastTime = ts; frame(ts); });
+})();
+
+// Smooth anchor scrolling
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');
+    if(id==='#') return;
+    const el=document.querySelector(id);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'});}
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
